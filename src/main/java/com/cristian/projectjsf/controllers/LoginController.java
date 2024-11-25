@@ -36,7 +36,6 @@ public class LoginController {
 				// TODO: handle exception
 				FacesContext.getCurrentInstance().addMessage("formLogin:txtUsuario",
 						new FacesMessage(FacesMessage.SEVERITY_FATAL, "La pagina no existe", ""));
-
 			}
 
 		} else {
