@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+
+import com.cristian.projectjsf.dto.UsuarioDTO;
 
 /**
  * @author cristian Clase que permite controlar el funcionamiento con la
@@ -22,6 +25,15 @@ public class LoginController {
 	 * contraseña que ingresan en el login
 	 */
 	private String password;
+	
+	/**
+	 * Bean que mantiene la informacion en session
+	 */
+	@ManagedProperty("#{sessionController}")
+	private SessionController sessionController;
+	
+	
+
 
 	/**
 	 * Metodo que permite ingresar a la pantalla principal del proyecto
@@ -31,6 +43,10 @@ public class LoginController {
 
 		if (usuario.equals("cristian") && password.equals("12345")) {
 			try {
+				UsuarioDTO usuarioDTO = new UsuarioDTO();
+				usuarioDTO.setUsuario(this.usuario);
+				usuarioDTO.setPassword(this.password);
+				this.sessionController.setUsuarioDTO(usuarioDTO);
 				this.redireccionar("principal.xhtml");
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -76,5 +92,20 @@ public class LoginController {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	/**
+	 * @return the sessionController
+	 */
+	public SessionController getSessionController() {
+		return sessionController;
+	}
+
+	/**
+	 * @param sessionController the sessionController to set
+	 */
+	public void setSessionController(SessionController sessionController) {
+		this.sessionController = sessionController;
+	}
+
 
 }

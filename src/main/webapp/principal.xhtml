@@ -1,40 +1,45 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>      
 <title>Pantalla Principal</title>
 </h:head>
 <h:body>
-Bienvenido a la pantalla pricnipal
-
-<h:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}">
-<h:column>
-<f:facet name="header">Nombre</f:facet>
+<p:outputLabel>Bienvenido a la pantalla principal</p:outputLabel>
+<p:outputLabel value="Bienvenido #{sessionController.usuarioDTO.usuario} a la pantalla principal"></p:outputLabel>
+<h:form>
+<p:commandButton value="Cerrar Sesion" action="#{sessionClosedController.cerrarSession}"></p:commandButton>
+<p:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}"  rows="10"
+                     paginator="true" paginatorPosition="both"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} registros"
+                     rowsPerPageTemplate="5,10,{ShowAll|'All'}" emptyMessage="No hay registros"
+                     filteredValue="#{principalController.empleadosFiltrados}" >
+                     
+<p:column headerText="Nombre" sortBy="#{empleado.nombre}" filterBy="#{empleado.nombre}" filterMatchMode="contains">
 <h:outputText value="#{empleado.nombre}"></h:outputText>
-</h:column>
+</p:column>
 
-<h:column>
-<f:facet name="header">Primer Apellido</f:facet>
+<p:column headerText="Primer Apellido" sortBy="#{empleado.primerApellido}"  filterBy="#{empleado.primerApellido}" filterMatchMode="contains">
 <h:outputText value="#{empleado.primerApellido}"></h:outputText>
-</h:column>
+</p:column>
 
-<h:column>
-<f:facet name="header">Segundo Apellido</f:facet>
+<p:column headerText="Segundo Apellido" sortBy="#{empleado.segundoApellido}"  filterBy="#{empleado.segundoApellido}" filterMatchMode="contains">
 <h:outputText value="#{empleado.segundoApellido}"></h:outputText>
-</h:column>
+</p:column>
 
-<h:column>
-<f:facet name="header">Puesto</f:facet>
+<p:column headerText="Puesto" sortBy="#{empleado.puesto}"  filterBy="#{empleado.puesto}" filterMatchMode="contains">
 <h:outputText value="#{empleado.puesto}"></h:outputText>
-</h:column>
+</p:column>
 
-<h:column>
-<f:facet name="header">Estatus</f:facet>
+<p:column headerText="Estatus">
 <h:outputText value="Habilitado" rendered="#{empleado.estatus}"></h:outputText>
 <h:outputText value="Inhabilitado" rendered="#{!empleado.estatus}"></h:outputText>
-</h:column>
-</h:dataTable>
+</p:column>
+</p:dataTable>
+</h:form>
 </h:body>
 </html>
